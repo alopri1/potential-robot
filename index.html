@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220"><title>{{ app_name }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header class="top"><b>EURUSD <i>ENGINE PRO</i></b><span id="session" class="pill">—</span>
+<span class="sp"></span><span id="status" class="muted">Connexion…</span>
+<button id="notif" class="ghost">🔔 Notifications</button><button id="refresh" class="ghost">↻</button></header>
+<main>
+<div id="error" class="alert hidden"></div><div id="blackout" class="alert warn hidden"></div>
+
+<section class="grid g2">
+ <article class="card hero"><div class="lbl">DÉCISION DU MOTEUR</div><div id="signal" class="signal wait">—</div>
+  <div id="state" class="muted">Analyse en cours…</div>
+  <div class="scores"><div><span>Technique</span><b id="s-tech">—</b></div><div><span>Fondamental</span><b id="s-fund">—</b></div><div><span>Total / seuil</span><b id="s-total">—</b></div></div>
+  <div class="bar"><div id="bar"></div></div>
+  <div class="price"><b id="price">—</b><span id="ptime" class="muted"></span></div></article>
+ <article class="card"><div class="lbl">PLAN DE TRADE INDICATIF</div>
+  <div class="kv"><div><span>Entrée</span><b id="entry">—</b></div><div><span>Stop-loss</span><b id="sl" class="neg">—</b></div>
+  <div><span>TP1 (1R, break-even)</span><b id="tp1" class="pos">—</b></div><div><span>TP2 (liquidité)</span><b id="tp2" class="pos">—</b></div>
+  <div><span>Risque</span><b id="risk">—</b></div><div><span>R:R</span><b id="rr">—</b></div></div>
+  <p id="target" class="tiny muted"></p>
+  <p class="tiny muted">Pas d'ordre exécuté. Vérifie prix, spread et taille de position chez ton courtier. Risque conseillé ≤ 0,5–1 % du capital par trade.</p></article>
+</section>
+
+<section class="grid g2">
+ <article class="card"><div class="lbl">CHECKLIST DU SETUP</div><ul id="checks" class="checks"></ul><div id="blockers" class="tiny muted"></div></article>
+ <article class="card"><div class="lbl">POURQUOI ? (contributions au score)</div><ul id="reasons" class="list"></ul></article>
+</section>
+
+<section class="card"><div class="lbl">STRUCTURE MULTI-TIMEFRAME (top-down)</div><div id="tfs" class="grid g4"></div></section>
+
+<section class="grid g2">
+ <article class="card"><div class="lbl">ZONES NON MITIGÉES (FVG / ORDER BLOCKS)</div><div id="zones" class="rows"></div></article>
+ <article class="card"><div class="lbl">LIQUIDITÉ & NIVEAUX DE RÉACTION</div><div id="levels" class="rows"></div></article>
+</section>
+
+<section class="card"><div class="lbl">FONDAMENTAL</div>
+ <div class="fhead"><b id="f-bias">—</b><span id="f-score" class="pill">—</span></div>
+ <div id="f-comps" class="rows"></div>
+ <div class="grid g2"><div><div class="sub">Taux directeurs</div><div id="f-policy" class="tiny muted">—</div></div>
+ <div><div class="sub">Calendrier USD / EUR (heure locale du navigateur)</div><div id="f-cal" class="rows"></div></div></div>
+ <p id="f-note" class="tiny muted"></p></section>
+
+<section class="card"><div class="fhead"><div><div class="lbl">BACKTEST (causal, exécution à l'ouverture suivante)</div></div><button id="bt-run" class="primary">Lancer</button></div>
+ <div class="ctl"><label>Période (jours)<select id="bt-days"><option>30</option><option>60</option><option>180</option><option>365</option></select></label>
+ <label>Stratégie<select id="bt-strat"><option value="pa">Price action complet</option><option value="pa_dxy">Price action + DXY</option><option value="sweep">Sweep + tendance</option><option value="ema">EMA 20/50 (référence)</option></select></label>
+ <label>Coût (pips)<input id="bt-cost" type="number" value="1.2" step="0.1" min="0" max="10"></label></div>
+ <div id="bt" class="muted">Lance un test pour voir les statistiques.</div></section>
+
+<section class="card"><div class="lbl">TRANSPARENCE</div><ul id="warnings" class="list tiny"></ul><p id="source" class="tiny muted"></p></section>
+</main>
+<footer>Mise à jour toutes les 60 s tant que la page est ouverte · Outil de recherche, pas un conseil financier.</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script></body></html>
